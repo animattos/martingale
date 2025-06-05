@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Martingale</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #111;
+      color: #f0f0f0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      color: #00e0ff;
+      margin-bottom: 20px;
+      text-align: center;
+      font-size: 2rem;
+    }
+
+    .input-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 15px;
+    }
+
+    input {
+      padding: 12px 20px;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
+      outline: none;
+      background: #222;
+      color: #fff;
+      width: 100%;
+      max-width: 160px;
+      box-shadow: inset 0 0 8px #00e0ff55;
+      transition: all 0.3s ease;
+    }
+
+    input:focus {
+      box-shadow: 0 0 12px #00e0ff;
+      background: #000;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 12px 24px;
+      font-size: 18px;
+      background-color: #00e0ff;
+      color: #000;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 5px 15px rgba(0, 224, 255, 0.4);
+      transition: background 0.3s ease, transform 0.2s ease;
+      width: 100%;
+      max-width: 200px;
+    }
+
+    button:hover {
+      background-color: #00c8e0;
+      transform: scale(1.05);
+    }
+
+    .result {
+      margin-top: 30px;
+      background: #222;
+      padding: 20px;
+      border-radius: 10px;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .result p {
+      margin: 10px 0;
+      font-size: 16px;
+    }
+
+    .entrada { color: #2D7C3D; }
+    .gale1   { color: #F3E82F; }
+    .gale2   { color: #DC9930; }
+    .gale3   { color: #C35722; }
+    .gale4   { color: #C23234; }
+    .gale5, .gale6, .gale7, .gale8, .gale9 { color: #bbbbbb; }
+    .total   { color: #00ffcc; font-weight: bold; }
+
+    .valor {
+      font-weight: bold;
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 2px 6px;
+      border-radius: 6px;
+      margin-left: 4px;
+      box-shadow: 0 0 5px rgba(255,255,255,0.2);
+    }
+
+    @media (max-width: 480px) {
+      .input-container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      input, button {
+        font-size: 16px;
+      }
+
+      .result p {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Calculadora de Martingale</h1>
+
+  <div class="input-container">
+    <input type="number" id="payout" placeholder="Payout (%)" />
+    <input type="number" id="entrada" placeholder="Entrada (R$)" />
+    <input type="number" id="gales" placeholder="Qtd. de Gales" min="1" max="9" />
+  </div>
+
+  <button onclick="calcularMartingale()">Calcular</button>
+
+  <div class="result" id="resultado"></div>
+
+  <script>
+    function calcularMartingale() {
+      const payoutInput = parseFloat(document.getElementById("payout").value);
+      const entradaInput = parseFloat(document.getElementById("entrada").value);
+      const galesInput = parseInt(document.getElementById("gales").value);
+      const payout = payoutInput / 100;
+      const entradaInicial = isNaN(entradaInput) ? 5.00 : entradaInput;
+      const numGales = isNaN(galesInput) ? 0 : Math.min(galesInput, 9);
+      const resultadoDiv = document.getElementById("resultado");
+
+      resultadoDiv.innerHTML = "";
+
+      if (isNaN(payout) || payout <= 0 || payout >= 1) {
+        resultadoDiv.innerHTML = "<p>⚠️ Insira um payout válido entre 1 e 99.</p>";
+        return;
+      }
+
+      if (numGales <= 0) {
+        resultadoDiv.innerHTML = "<p>⚠️ Informe a quantidade de Gales (mínimo 1).</p>";
+        return;
+      }
+
+      let entradas = [entradaInicial];
+      let somaAnterior = entradaInicial;
+
+      resultadoDiv.innerHTML += `<p class="entrada">🔹 <strong>Entrada:</strong><span class="valor"> R$${entradaInicial.toFixed(2)}</span></p>`;
+
+      for (let i = 1; i <= numGales; i++) {
+        let valorGale = (somaAnterior / payout) + entradaInicial;
+        entradas.push(valorGale);
+        somaAnterior += valorGale;
+        resultadoDiv.innerHTML += `<p class="gale${i}">🔸 <strong>Gale ${i}:</strong><span class="valor"> R$${valorGale.toFixed(2)}</span></p>`;
+      }
+
+      let total = entradas.reduce((acc, val) => acc + val, 0);
+      resultadoDiv.innerHTML += `<p class="total">💰 Valor Total Investido:<span class="valor"> R$${total.toFixed(2)}</span></p>`;
+    }
+  </script>
+
+</body>
+</html>
