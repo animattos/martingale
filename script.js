@@ -196,19 +196,23 @@
   // ---------- Video modal ----------
   var modal = document.getElementById("video-modal");
   var iframe = document.getElementById("video-iframe");
-  var VIDEO_SRC = "https://www.youtube.com/embed/ddIa9X3pwLE?autoplay=1";
-  function openVideo() {
-    if (!modal) return;
-    iframe.src = VIDEO_SRC;
-    modal.hidden = false;
-    document.body.style.overflow = "hidden";
-  }
-  function closeVideo() {
-    if (!modal) return;
-    iframe.src = "https://www.youtube.com/embed/ddIa9X3pwLE?autoplay=1";
-    modal.hidden = true;
-    document.body.style.overflow = "";
-  }
+  var VIDEO_SRC = "https://www.youtube.com/embed/jNQXAC9IVRw?autoplay=1";
+
+function openVideo() {
+  if (!modal) return;
+
+  iframe.src = VIDEO_SRC;
+  modal.hidden = false;
+  document.body.style.overflow = "hidden";
+}
+
+function closeVideo() {
+  if (!modal) return;
+
+  modal.hidden = true;
+  iframe.src = ""; // para completamente o vídeo
+  document.body.style.overflow = "";
+}
   document.querySelectorAll("[data-open-video]").forEach(function (el) {
     el.addEventListener("click", openVideo);
   });
