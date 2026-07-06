@@ -196,9 +196,8 @@
   // ---------- Video modal ----------
   var modal = document.getElementById("video-modal");
   var iframe = document.getElementById("video-iframe");
-  var VIDEO_SRC = "https://www.youtube.com/embed/jNQXAC9IVRw?autoplay=1";
-
-function openVideo() {
+  var VIDEO_SRC = "https://www.youtube.com/embed/ddIa9X3pwLE?autoplay=1";
+  function openVideo() {
   if (!modal) return;
 
   iframe.src = VIDEO_SRC;
