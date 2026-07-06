@@ -1,276 +1,253 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Calculadora de Martingale</title>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #111;
-      color: #f0f0f0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 40px 20px;
-      position: relative;
-    }
-
-    h1 {
-      color: #00e0ff;
-      margin-bottom: 20px;
-      text-align: center;
-      font-size: 2rem;
-    }
-
-    /* Ícone de ajuda */
-    .ajuda-icon {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      font-size: 24px;
-      color: #00e0ff;
-      cursor: pointer;
-      transition: transform 0.2s ease;
-    }
-
-    .ajuda-icon:hover {
-      transform: scale(1.2);
-    }
-
-    /* Modal */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.7);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .modal-content {
-      background: #222;
-      padding: 20px;
-      border-radius: 10px;
-      width: 90%;
-      max-width: 500px;
-      color: #f0f0f0;
-    }
-
-    .modal-content h2 {
-      color: #00e0ff;
-      margin-top: 0;
-    }
-
-    .modal-content p {
-      margin: 10px 0;
-      line-height: 1.4;
-    }
-
-    .close-btn {
-      margin-top: 10px;
-      background: #00e0ff;
-      color: #000;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .input-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 15px;
-    }
-
-    .input-container input {
-      padding: 10px;
-      font-size: 16px;
-      width: 90px;
-      text-align: center;
-      border: none;
-      border-radius: 10px;
-      outline: none;
-      background: #222;
-      color: #fff;
-      box-shadow: inset 0 0 8px #00e0ff55;
-      transition: all 0.3s ease;
-    }
-
-    .input-container input:focus {
-      box-shadow: 0 0 12px #00e0ff;
-      background: #000;
-    }
-
-    button {
-      margin-top: 15px;
-      padding: 12px 24px;
-      font-size: 18px;
-      background-color: #00e0ff;
-      color: #000;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: bold;
-      box-shadow: 0 5px 15px rgba(0, 224, 255, 0.4);
-      transition: background 0.3s ease, transform 0.2s ease;
-      width: 100%;
-      max-width: 200px;
-    }
-
-    button:hover {
-      background-color: #00c8e0;
-      transform: scale(1.05);
-    }
-
-    .result {
-      display: none;
-      margin-top: 30px;
-      background: #222;
-      padding: 20px;
-      border-radius: 10px;
-      width: 100%;
-      max-width: 400px;
-    }
-
-    .result p {
-      margin: 10px 0;
-      font-size: 16px;
-    }
-
-    .entrada { color: #2D7C3D; }
-    .gale1   { color: #F3E82F; }
-    .gale2   { color: #DC9930; }
-    .gale3   { color: #C35722; }
-    .gale4   { color: #C23234; }
-    .gale5, .gale6, .gale7, .gale8, .gale9 { color: #bbbbbb; }
-    .total   { color: #00ffcc; font-weight: bold; }
-
-    .valor {
-      font-weight: bold;
-      color: #ffffff;
-      background: rgba(255, 255, 255, 0.1);
-      padding: 2px 6px;
-      border-radius: 6px;
-      margin-left: 4px;
-      box-shadow: 0 0 5px rgba(255,255,255,0.2);
-    }
-
-    @media (max-width: 480px) {
-      .input-container {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      input, button {
-        font-size: 16px;
-      }
-
-      .result p {
-        font-size: 14px;
-      }
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SinaisPower — Indicador Profissional para MetaTrader 4</title>
+<meta name="description" content="Indicador profissional para MetaTrader 4. Teste 3 dias grátis, assinatura R$ 30/mês. Sinais precisos, alertas em tempo real." />
+<link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
+<link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-  <span class="ajuda-icon" onclick="abrirModal()">❓</span>
+<!-- Icon sprite (lucide) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-trending-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></symbol>
+    <symbol id="i-zap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></symbol>
+    <symbol id="i-bars" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 16V9"/><path d="M12 16V5"/><path d="M17 16v-4"/></symbol>
+    <symbol id="i-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></symbol>
+    <symbol id="i-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></symbol>
+    <symbol id="i-rocket" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+    <symbol id="i-trophy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linejoin="round"><polygon points="6 3 20 12 6 21 6 3"/></symbol>
+    <symbol id="i-chevron-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></symbol>
+    <symbol id="i-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+  </defs>
+</svg>
 
-  <h1>Calculadora de Martingale</h1>
-
-  <div class="input-container">
-    <input type="number" id="payout" placeholder="Payout (%)" />
-    <input type="number" id="entrada" placeholder="Entrada (R$)" />
-    <input type="number" id="gales" placeholder="Qtd. de Gales" min="1" max="9" />
+<!-- HEADER -->
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="#" class="brand">
+      <span class="brand-badge"><svg class="icon"><use href="#i-trending-up"/></svg></span>
+      <span class="brand-name">Sinais<span class="neon-text">Power</span></span>
+    </a>
+    <nav class="main-nav">
+      <a href="#beneficios">Benefícios</a>
+      <a href="#planos">Planos</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a href="#planos" class="btn btn-neon btn-sm" data-trial>Testar Grátis</a>
   </div>
+</header>
 
-  <button onclick="calcularMartingale()">Calcular</button>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="container hero-inner">
+    <div class="hero-text fade-up">
+      <div class="badge-live">
+        <span class="live-dot"><span class="ping"></span><span class="core"></span></span>
+        AO VIVO · <span class="tabular" id="live-traders">3.400</span>+ traders operando agora
+      </div>
+      <h1 class="hero-title">
+        Opere com <span class="neon-text">precisão</span><span> no</span><br/>Day Trader </h1>
+      <p class="hero-sub">
+        Este é o indicador mais acertivo do mundo, o único que gera uma grande quantidades de sinais
+        com maior índice de WINS e que garante lucros diários. Tire a prova hoje mesmo!
+      </p>
+      <div class="hero-cta">
+        <a href="#planos" class="btn btn-neon btn-lg pulse-glow" data-trial>
+          Teste Grátis 3 Dias <svg class="icon"><use href="#i-arrow-right"/></svg>
+        </a>
+        <a href="#planos" class="btn btn-outline btn-lg">Assinar por R$ 30/mês</a>
+      </div>
+      <div class="hero-checks">
+        <span><svg class="icon icon-neon"><use href="#i-check"/></svg> Sem cartão no teste</span>
+        <span><svg class="icon icon-neon"><use href="#i-check"/></svg> Já ganha testando</span>
+        <span><svg class="icon icon-neon"><use href="#i-check"/></svg> Suporte 24 horas</span>
+      </div>
+    </div>
 
-  <div class="result" id="resultado"></div>
-
-  <!-- Modal -->
-  <div class="modal" id="modal">
-    <div class="modal-content">
-      <h2>Como funciona o Martingale?</h2>
-      <p>
-        O método Martingale aumenta a entrada após cada perda, buscando recuperar o prejuízo e obter lucro.
-      </p>
-      <p>
-        A fórmula é:
-        <br><strong>Próxima entrada = (soma das perdas anteriores / payout decimal) + valor fixo da entrada</strong>
-      </p>
-      <p>
-        Por exemplo, com entrada de R$5 e payout de 93%:
-        <br>Gale 1 = (5 / 0.93) + 5 = R$10,38
-        <br>Gale 2 = (5 + 10,38) / 0.93 + 5 = R$21,54
-      </p>
-      <p>
-        Isso continua até o número de Gales definido.
-      </p>
-      <button class="close-btn" onclick="fecharModal()">Fechar</button>
+    <div class="hero-video fade-up" style="animation-delay:.15s">
+      <div class="glow-behind"></div>
+      <button class="video-thumb float" data-open-video type="button" aria-label="Abrir vídeo de demonstração">
+        <img src="assets/youtube-thumb.jpg" alt="Thumbnail do vídeo de demonstração SinaisPower" />
+        <span class="video-overlay">
+          <span class="play-btn"><svg class="icon"><use href="#i-play"/></svg></span>
+        </span>
+      </button>
     </div>
   </div>
+</section>
 
-  <script>
-    function abrirModal() {
-      document.getElementById("modal").style.display = "flex";
-    }
+<!-- STATS -->
+<section class="stats">
+  <div class="container stats-grid">
+    <div class="stat"><div class="stat-value" data-count="87" data-suffix="%">0%</div><div class="stat-label">Taxa de acerto média</div></div>
+    <div class="stat"><div class="stat-value" data-count="3400" data-live="1" data-prefix="+" data-format="thousands">+0</div><div class="stat-label">Traders ativos</div></div>
+    <div class="stat"><div class="stat-value" data-count="24" data-suffix="/7">0/7</div><div class="stat-label">Suporte no Telegram</div></div>
+    <div class="stat"><div class="stat-value" data-count="30" data-prefix="R$ ">R$ 0</div><div class="stat-label">Por mês, sem fidelidade</div></div>
+  </div>
+</section>
 
-    function fecharModal() {
-      document.getElementById("modal").style.display = "none";
-    }
+<!-- SHOWCASE -->
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Sinais em ação</div>
+      <h2 class="section-title">Veja os sinais <span class="neon-text">reais</span> no gráfico</h2>
+      <p class="section-sub">Setas de compra e venda plotadas em tempo real, com placar de WINS/LOSS e cálculo de payout automático.</p>
+    </div>
+    <div class="frame-wrap">
+      <div class="glow-behind"></div>
+      <div class="frame">
+        <img src="assets/barras.jpg" alt="Indicador SinaisPower plotando sinais de compra e venda em gráfico EUR/GBP M5" />
+      </div>
+    </div>
+  </div>
+</section>
 
-    function calcularMartingale() {
-      const payoutInput = parseFloat(document.getElementById("payout").value);
-      const entradaInput = parseFloat(document.getElementById("entrada").value);
-      const galesInput = parseInt(document.getElementById("gales").value);
-      const payout = payoutInput / 100;
-      const entradaInicial = isNaN(entradaInput) ? 5.00 : entradaInput;
-      const numGales = isNaN(galesInput) ? 0 : Math.min(galesInput, 9);
-      const resultadoDiv = document.getElementById("resultado");
+<!-- SCOREBOARD -->
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div class="badge-pill"><svg class="icon"><use href="#i-trophy"/></svg> Resultados Reais</div>
+      <h2 class="section-title">Placar de uma <span class="neon-text">sexta-feira</span> real</h2>
+      <p class="section-sub">6 ativos operados simultaneamente. Zero martingale. Gestão de risco inteligente e lucro consistente no fim da semana.</p>
+    </div>
 
-      resultadoDiv.innerHTML = "";
-      resultadoDiv.style.display = "none";
+    <div class="frame-wrap">
+      <div class="glow-behind"></div>
+      <div class="frame carousel" id="carousel">
+        <div class="carousel-track">
+          <img src="assets/placar.jpg" alt="Placar de resultados SinaisPower em 6 ativos simultâneos numa sexta-feira" />
+          <img src="assets/placar2.png" alt="Placar SinaisPower com WINS e LOSS em 6 pares em tempo real" />
+        </div>
+        <button class="carousel-btn prev" type="button" aria-label="Imagem anterior"><svg class="icon"><use href="#i-chevron-left"/></svg></button>
+        <button class="carousel-btn next" type="button" aria-label="Próxima imagem"><svg class="icon"><use href="#i-chevron-right"/></svg></button>
+        <div class="carousel-dots"></div>
+      </div>
+    </div>
 
-      if (isNaN(payout) || payout <= 0 || payout >= 1) {
-        resultadoDiv.style.display = "block";
-        resultadoDiv.innerHTML = "<p>⚠️ Insira um payout válido entre 1 e 99.</p>";
-        return;
-      }
+    <div class="mini-grid">
+      <div class="mini-card"><div class="mini-title">Sem Martingale</div><p>Gestão de risco real. Nunca dobramos stakes para recuperar perdas.</p></div>
+      <div class="mini-card"><div class="mini-title">Multi-Ativo</div><p>Forex, índices e pares cruzados operando ao mesmo tempo com o mesmo indicador.</p></div>
+      <div class="mini-card"><div class="mini-title">Resultado Transparente</div><p>Cada operação registrada no MT4. Você vê antes de acreditar.</p></div>
+    </div>
+  </div>
+</section>
 
-      if (numGales <= 0) {
-        resultadoDiv.style.display = "block";
-        resultadoDiv.innerHTML = "<p>⚠️ Informe a quantidade de Gales (mínimo 1).</p>";
-        return;
-      }
+<!-- BENEFITS -->
+<section id="beneficios" class="section">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Por que SinaisPower</div>
+      <h2 class="section-title">Tudo que você precisa para <span class="neon-text">operar melhor</span></h2>
+      <p class="section-sub">Um indicador desenhado por traders profissionais para eliminar ruído e mostrar apenas os setups que importam.</p>
+    </div>
+    <div class="benefits-grid" id="benefits-grid"></div>
+  </div>
+</section>
 
-      resultadoDiv.style.display = "block";
+<!-- PRICING -->
+<section id="planos" class="section pricing">
+  <div class="pricing-bg"></div>
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Planos</div>
+      <h2 class="section-title">Comece hoje. <span class="neon-text">Sem enrolação.</span></h2>
+      <p class="section-sub">Teste 3 dias grátis. Se ganhar dinheiro, continue por R$ 30/mês.</p>
+    </div>
 
-      let entradas = [entradaInicial];
-      let somaAnterior = entradaInicial;
+    <div class="plans">
+      <div class="plan">
+        <div class="plan-chip"><svg class="icon"><use href="#i-clock"/></svg> Comece por aqui</div>
+        <h3>Teste Grátis</h3>
+        <div class="price"><span class="amount">R$ 0</span><span class="period">/ 3 dias</span></div>
+        <p class="plan-sub">Acesso completo. Sem cartão.</p>
+        <ul class="features">
+          <li><svg class="icon icon-neon"><use href="#i-check"/></svg> Indicador completo por 72h</li>
+          <li><svg class="icon icon-neon"><use href="#i-check"/></svg> Todos os alertas ativos</li>
+          <li><svg class="icon icon-neon"><use href="#i-check"/></svg> Grupo de suporte no Telegram</li>
+          <li><svg class="icon icon-neon"><use href="#i-check"/></svg> Sem cadastro de cartão</li>
+        </ul>
+        <a href="#" class="btn btn-outline btn-block" data-trial>Ativar Teste Grátis <svg class="icon"><use href="#i-arrow-right"/></svg></a>
+      </div>
 
-      resultadoDiv.innerHTML += `<p class="entrada">🔹 <strong>Entrada:</strong><span class="valor"> R$${entradaInicial.toFixed(2)}</span></p>`;
+      <div class="plan plan-featured">
+        <div class="ribbon">MAIS ESCOLHIDO</div>
+        <div class="plan-chip chip-neon"><svg class="icon"><use href="#i-rocket"/></svg> Trader Ativo</div>
+        <h3>Assinatura Mensal</h3>
+        <div class="price"><span class="amount neon-text">R$ 30</span><span class="period">/ mês</span></div>
+        <p class="plan-sub">Cancele quando quiser. Sem fidelidade.</p>
+        <ul class="features">
+          <li><svg class="icon icon-neon"><use href="#i-check"/></svg> Tudo do teste grátis</li>
+          <li><svg class="icon icon-neon"><use href="#i-check"/></svg> Atualizações ilimitadas do algoritmo</li>
+          <li><svg class="icon icon-neon"><use href="#i-check"/></svg> Alertas por email, push e Telegram</li>
+          <li><svg class="icon icon-neon"><use href="#i-check"/></svg> Suporte prioritário 24/7</li>
+          <li><svg class="icon icon-neon"><use href="#i-check"/></svg> Acesso à comunidade privada</li>
+          <li><svg class="icon icon-neon"><use href="#i-check"/></svg> Videoaulas de setup e uso</li>
+        </ul>
+        <a href="#" class="btn btn-neon btn-block">Assinar por R$ 30/mês <svg class="icon"><use href="#i-arrow-right"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
 
-      for (let i = 1; i <= numGales; i++) {
-        let valorGale = (somaAnterior / payout) + entradaInicial;
-        entradas.push(valorGale);
-        somaAnterior += valorGale;
-        resultadoDiv.innerHTML += `<p class="gale${i}">🔸 <strong>Gale ${i}:</strong><span class="valor"> R$${valorGale.toFixed(2)}</span></p>`;
-      }
+<!-- FAQ -->
+<section id="faq" class="section faq-section">
+  <div class="container-narrow">
+    <div class="section-head">
+      <div class="eyebrow">FAQ</div>
+      <h2 class="section-title">Perguntas <span class="neon-text">frequentes</span></h2>
+    </div>
+    <div class="faq-list" id="faq-list"></div>
 
-      let total = entradas.reduce((acc, val) => acc + val, 0);
-      resultadoDiv.innerHTML += `<p class="total">💰 Valor Total Investido:<span class="valor"> R$${total.toFixed(2)}</span></p>`;
-    }
-  </script>
+    <div class="cta-box">
+      <div class="cta-icon"><svg class="icon"><use href="#i-users"/></svg></div>
+      <h3>Pronto para operar com vantagem?</h3>
+      <p>Junte-se a milhares de traders que já melhoraram seus resultados.</p>
+      <div class="cta-actions">
+        <a href="#" class="btn btn-neon" data-trial>Teste Grátis 3 Dias <svg class="icon"><use href="#i-arrow-right"/></svg></a>
+        <a href="#" class="btn btn-outline">Assinar R$ 30/mês</a>
+      </div>
+    </div>
+  </div>
+</section>
 
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="brand">
+      <span class="brand-badge sm"><svg class="icon"><use href="#i-trending-up"/></svg></span>
+      <span class="brand-name">Sinais<span class="neon-text">Power</span></span>
+    </div>
+    <p class="footer-copy">© <span id="year"></span> SinaisPower. Trading envolve risco. Resultados passados não garantem resultados futuros.</p>
+  </div>
+</footer>
+
+<!-- VIDEO MODAL -->
+<div class="modal" id="video-modal" hidden>
+  <div class="modal-backdrop" data-close-video></div>
+  <div class="modal-content" role="dialog" aria-modal="true" aria-label="Demonstração do Indicador SinaisPower">
+    <button class="modal-close" data-close-video aria-label="Fechar"><svg class="icon"><use href="#i-x"/></svg></button>
+    <div class="video-frame">
+      <iframe id="video-iframe" title="Demonstração do Indicador SinaisPower"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
