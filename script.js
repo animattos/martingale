@@ -99,7 +99,7 @@
     { icon: "i-target", title: "Sinais Precisos", text: "Algoritmo com filtros para entradas de alta probabilidade." },
     { icon: "i-bell", title: "Alertas em Tempo Real", text: "Notificações push, email e sonoras direto no MT4 assim que o setup aparece." },
     { icon: "i-bars", title: "Multi-Ativos", text: "Funciona em qualquer par de moedas, nos timeframes M1 e M5." },
-    { icon: "i-shield", title: "Automação", text: "Possue Buffers nas setas para automação nas melhores corretoras" },
+    { icon: "i-shield", title: "Automação", text: "Possue Buffers nas setas para automação nas melhores corretoras." },
     { icon: "i-zap", title: "Instalação em 2 min", text: "Arquivo .ex4 pronto. Copiou, colou, ativou. Sem configurações complicadas." },
     { icon: "i-trending-up", title: "Atualizações Grátis", text: "Melhorias contínuas do algoritmo incluídas na sua assinatura, para sempre." }
   ];
