@@ -97,7 +97,7 @@
   // ---------- Benefits (rendered) ----------
   var BENEFITS = [
     { icon: "i-target", title: "Sinais Precisos", text: "Algoritmo com filtros para entradas de alta probabilidade." },
-    { icon: "i-bell", title: "Sinais de Seta", text: "Sinais a todo momento com 90% de probabilidade para garantir o seu lucro diário." },
+    { icon: "i-bell", title: "Sinais de Seta", text: "Sinais a todo momento com 95% de probabilidade para garantir o seu lucro diário." },
     { icon: "i-bars", title: "Multi-Ativos", text: "Funciona em qualquer par de moedas, nos timeframes M1 e M5." },
     { icon: "i-shield", title: "Automação", text: "Possue Buffers nas setas para automação nas melhores corretoras." },
     { icon: "i-zap", title: "Instalação em 2 min", text: "Arquivo .ex4 pronto. Copiou, colou, ativou. Sem configurações complicadas." },
