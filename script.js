@@ -118,12 +118,12 @@
 
   // ---------- FAQ ----------
   var FAQS = [
-    { q: "Como funciona o teste grátis de 3 dias?", a: "Você recebe acesso completo ao indicador por 72h, sem precisar cadastrar cartão. Se gostar, ativa a assinatura de R$ 30/mês. Se não, é só não continuar." },
-    { q: "Preciso deixar o computador ligado?", a: "O indicador roda dentro do seu MetaTrader 4. Para receber sinais em tempo real, o MT4 precisa estar aberto — recomendamos usar um VPS de trading." },
+    { q: "Como funciona o teste grátis de 3 dias?", a: "Você recebe acesso completo ao indicador por 72h, sem precisar cadastrar cartão. Após provar a lucratividade obtida pelo indicador, você ativa a assinatura de R$ 30/mês. Se não, é só não continuar. Faça agora mesmo o download e veja o que você jamais viu em outro lugar." },
+    { q: "Preciso deixar o computador ligado?", a: "O indicador roda dentro do seu MetaTrader 4. Para receber sinais em tempo real, o MT4 precisa estar aberto. Você pode colocar quantos pares de moedas desejar e utilizar um automatizador de confiança e que funcione corretamente, e no final do dia vai ver o lucro subindo cada vez mais." },
     { q: "Funciona em conta demo?", a: "Sim. Você pode testar em conta demo à vontade, tanto no período grátis quanto durante a assinatura." },
-    { q: "Posso cancelar quando quiser?", a: "Sim. Sem multa, sem fidelidade. Cancela pelo painel e mantém acesso até o fim do período pago." },
-    { q: "Em quais corretoras funciona?", a: "Em qualquer corretora que ofereça a plataforma MetaTrader 4. XP, Clear, Exness, XM, IC Markets, Pepperstone e outras." },
-    { q: "Recebo suporte se tiver dificuldade?", a: "Sim. Grupo exclusivo no Telegram com suporte técnico e atualizações do algoritmo." }
+    { q: "Posso cancelar quando quiser?", a: "Sim. Sem multa, sem fidelidade. Basta não renovar a asinatura, e mantém acesso até o fim do período pago." },
+    { q: "Em quais corretoras funciona?", a: "Em qualquer corretora que utiliza Forex, e para automação, você deve consultarar quais corretoras estão disponíveis pelo automatizador de preferência." },
+    { q: "Recebo suporte se tiver dificuldade?", a: "Sim. Grupo exclusivo no Whatsapp com suporte técnico e atualizações do algoritmo." }
   ];
   var faqList = document.getElementById("faq-list");
   if (faqList) {
